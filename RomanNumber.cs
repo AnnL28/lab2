@@ -23,26 +23,19 @@ namespace lab2
         private string[] correct_number;
         private string s, s2;
 
-        private string ChangeToString()
-        {
-            s = n.ToString();
-            return s;
-        }
         //Конструктор получает представление числа n в римской записи
         public RomanNumber(ushort n)
         {
-            if (n == 0)
+            if (n == 0||n>3999)
             {
-
-                RomanNumberException ex = new RomanNumberException();
-                ex.NullException("Вводимое число или результат действия равны нулю");
+                throw new RomanNumberException("Вводимое число не может быть представлено в римской системе исчисления");
 
             }
             else
             {
                 this.n = n;
                 Number = n;
-                s = ChangeToString();
+                s = n.ToString();
                 correct_number = new string[s.Length];
 
                 switch (s[s.Length - 1])
@@ -235,47 +228,64 @@ namespace lab2
         //Сложение римских чисел
         public static RomanNumber Add(RomanNumber? n1, RomanNumber? n2)
         {
-            ushort sum = Convert.ToUInt16(n1.n + n2.n);
-
-            RomanNumber SUM = new RomanNumber(sum);
-            return SUM;
+            if (n1.n+n2.n>3999)
+            {
+                throw new RomanNumberException("Сумма не может быть представлена в римской системе исчисления");
+            } else
+            {
+                ushort sum = Convert.ToUInt16(n1.n + n2.n);
+                RomanNumber SUM = new RomanNumber(sum);
+                return SUM;
+            }
+           
         }
         //Вычитание римских чисел
         public static RomanNumber Sub(RomanNumber? n1, RomanNumber? n2)
         {
-            if (Convert.ToUInt16(n2.n) > Convert.ToUInt16(n1.n))
+            if (Convert.ToUInt16(n2.n) >= Convert.ToUInt16(n1.n))
             {
-                RomanNumberException ex = new RomanNumberException();
-                ex.DifException("Уменьшаемое должно быть больше вычитаемого числа");
+                throw new RomanNumberException("Уменьшаемое должно быть больше вычитаемого числа");
+            }
+            else
+            {
+                ushort dif = Convert.ToUInt16(n1.n - n2.n);
+
+                RomanNumber DIF = new RomanNumber(dif);
+                return DIF;
             }
 
-            ushort dif = Convert.ToUInt16(n1.n - n2.n);
-
-            RomanNumber DIF = new RomanNumber(dif);
-            return DIF;
 
 
         }
         //Умножение римских чисел
         public static RomanNumber Mul(RomanNumber? n1, RomanNumber? n2)
         {
-            ushort mult = Convert.ToUInt16(n1.n * n2.n);
+            if (n1.n * n2.n>3999)
+            {
+                throw new RomanNumberException("Произведение не может быть представлено в римской системе исчисления");
+            } else
+            {
+                ushort mult = Convert.ToUInt16(n1.n * n2.n);
+    
+                RomanNumber MULT = new RomanNumber(mult);
+                return MULT;
+            }
 
-            RomanNumber MULT = new RomanNumber(mult);
-            return MULT;
+            
         }
         //Целочисленное деление римских чисел
         public static RomanNumber Div(RomanNumber? n1, RomanNumber? n2)
         {
-            if (Convert.ToUInt16(n2.n) != 0)
+            if (Convert.ToUInt16(n2.n) == 0)
+            {
+                throw new RomanNumberException("Делитель не может равняться нулю");
+            }
+            else if (n1.n - n2.n < 1)
+                throw new RomanNumberException("Делимое должно быть больше делителя");
+            else
             {
                 ushort div = Convert.ToUInt16(n1.n / n2.n);
                 RomanNumber DIV = new RomanNumber(div);
-                return DIV;
-            }
-            else
-            {
-                RomanNumber DIV = new RomanNumber(0);
                 return DIV;
             }
 
@@ -283,7 +293,7 @@ namespace lab2
         //Возвращает строковое представление римского числа
         public override string ToString()
         {
-            s = ChangeToString();
+            s = n.ToString();
             s2 = "";
             for (int j = 0; j < s.Length; j++)
             {

@@ -6,13 +6,13 @@ namespace lab2
     {
         static void Main()
         {
-            RomanNumber n1 = new RomanNumber(12);
+            RomanNumber n1 = new RomanNumber(40);
             Console.WriteLine(n1);
 
             RomanNumber n2 = new RomanNumber(10);
             Console.WriteLine(n1);
 
-            RomanNumber n3 = (RomanNumber)n1.Clone();
+            RomanNumber n3 = (RomanNumber)n2.Clone();
             Console.WriteLine(n3);
 
             RomanNumber dif0 = RomanNumber.Sub(n1, n3);

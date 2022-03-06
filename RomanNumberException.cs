@@ -6,11 +6,7 @@ namespace lab2
 {
     public class RomanNumberException : Exception
     {
-        public void NullException(string message)
-        {
-            Console.WriteLine(message);
-        }
-        public void DifException(string message)
+        public RomanNumberException(string message)
         {
             Console.WriteLine(message);
         }
